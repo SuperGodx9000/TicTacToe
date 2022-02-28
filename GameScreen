@@ -1,0 +1,127 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class GameScreen
+{
+    //Frame
+    JFrame frame1 = new JFrame("TicTacToe");
+    JFrame frame = new JFrame("TicTacToe/Title Screen");
+
+    //Panels
+    JPanel opening_panel1 = new JPanel();
+    JPanel opening_panel2 = new JPanel();
+
+    JPanel title_panel = new JPanel();
+    JPanel button_panel = new JPanel();
+    JPanel info_panel = new JPanel();
+
+    //Labels
+    //Opening Shots
+    JLabel opening_label1 = new JLabel("TicTacToe");
+    JLabel opening_label2 = new JLabel("By:Michael");
+
+    //Title Screen
+    JLabel title_label = new JLabel("Choose a game mode");
+    JLabel multi_label = new JLabel("Player v. Player");
+    JLabel single_label = new JLabel("Player v. CPU");
+
+    //Buttons
+    //Button1 multiplayer (player v. player)
+    JButton multi = new JButton("Multiplayer");
+
+    //Button2 single player (player v. CPU)
+    JButton single = new JButton("Single Player");
+
+    GameScreen()
+    {
+        //OPENING SHOTS
+        //Setting colors, fonts, and sizes
+        opening_label1.setFont(new Font("Times New Roman", Font.BOLD, 100));
+        opening_label2.setFont(new Font("Times New Roman", Font.BOLD, 50));
+
+        opening_label1.setForeground(Color.blue);
+        opening_label2.setForeground(Color.blue);
+
+        opening_panel1.setBackground(Color.BLACK);
+        opening_panel2.setBackground(Color.BLACK);
+
+        //Adding it all together
+        opening_panel1.add(opening_label1);
+        opening_panel2.add(opening_label2);
+
+        frame1.add(opening_panel1, BorderLayout.CENTER);
+        frame1.add(opening_panel2, BorderLayout.SOUTH);
+
+        //Setting up the screen
+        frame1.setSize(800,300);
+        frame1.setLocationRelativeTo(null);
+        frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame1.setVisible(true);
+
+        //Transition
+        ActionListener openingActionsOver = new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                frame1.setVisible(false);
+                frame.setVisible(true);
+            }
+        };
+
+        Timer timer = new Timer(5000, openingActionsOver);
+        timer.setRepeats(false);
+        timer.start();
+
+        //adding all the labels and buttons together
+        title_panel.add(title_label);
+        button_panel.add(multi);
+        button_panel.add(single);
+        info_panel.add(multi_label);
+        info_panel.add(single_label);
+
+        //Setting fonts, sizes, and colors
+        title_label.setFont(new Font("Times New Roman", Font.BOLD, 50));
+        multi_label.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        single_label.setFont(new Font("Times New Roman", Font.BOLD, 20));
+
+        multi.setFont(new Font("Times New Roman", Font.BOLD, 50));
+        single.setFont(new Font("Times New Roman", Font.BOLD, 50));
+
+        //Button layout
+        button_panel.setLayout(new GridLayout(1,2));
+
+        //Label layout 2 and 3
+        info_panel.setLayout(new GridLayout(1,2));
+
+        //Adding action listener
+        multi.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                TicTacToeMulti multiPlayer = new TicTacToeMulti();
+                frame.setVisible(false);
+            }
+        });
+
+        single.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                TicTacToeSingle singlePlayer = new TicTacToeSingle();
+                frame.setVisible(false);
+            }
+        });
+
+        //Putting it all together
+        frame.add(title_panel, BorderLayout.NORTH);
+        frame.add(button_panel, BorderLayout.CENTER);
+        frame.add(info_panel, BorderLayout.SOUTH);
+
+        //Setting up the screen
+        frame.setSize(800,300);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+}
